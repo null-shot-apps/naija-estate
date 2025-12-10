@@ -8,12 +8,13 @@ import Link from 'next/link';
 import { formatCurrency, formatCrypto } from '@/lib/utils';
 import { useState } from 'react';
 import { CryptoType } from '@/types';
-import { useAccount } from 'wagmi';
+import { useStore } from '@/lib/store';
 import { useParams } from 'next/navigation';
 
 export default function PropertyDetailPage() {
   const params = useParams();
-  const { isConnected } = useAccount();
+  const { walletAddress } = useStore();
+  const isConnected = !!walletAddress;
   const [selectedCrypto, setSelectedCrypto] = useState<CryptoType>('USDC');
   const [selectedImage, setSelectedImage] = useState(0);
   const [showPaymentModal, setShowPaymentModal] = useState(false);

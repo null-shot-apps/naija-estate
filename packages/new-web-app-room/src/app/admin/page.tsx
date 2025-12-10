@@ -1,13 +1,14 @@
 'use client';
 
 import { Header } from '@/components/Header';
-import { useAccount } from 'wagmi';
+import { useStore } from '@/lib/store';
 import { Shield, Users, Building2, Wrench, AlertCircle, CheckCircle, XCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function AdminPage() {
-  const { isConnected } = useAccount();
+  const { walletAddress } = useStore();
+  const isConnected = !!walletAddress;
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'agents' | 'properties' | 'artisans' | 'disputes'>('agents');
 

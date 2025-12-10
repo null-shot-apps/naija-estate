@@ -1,21 +1,6 @@
 'use client';
 
-import { createConfig, http } from 'wagmi';
-import { mainnet } from 'wagmi/chains';
-import { injected, walletConnect } from 'wagmi/connectors';
-
-const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || 'demo-project-id';
-
-export const config = createConfig({
-  chains: [mainnet],
-  connectors: [
-    injected(),
-    walletConnect({ projectId }),
-  ],
-  transports: {
-    [mainnet.id]: http(),
-  },
-});
+import { BrowserProvider } from 'ethers';
 
 // Crypto price conversion rates (mock - in production, fetch from API)
 export const CRYPTO_RATES: Record<string, number> = {
@@ -36,3 +21,40 @@ export function convertCryptoToNGN(cryptoAmount: number, crypto: string): number
   return cryptoAmount * rate;
 }
 
+// Web3 wallet connection helper
+export async function connectWallet(): Promise<string | null> {
+  if (typeof window === 'undefined' || !window.ethereum) {
+    return null;
+  }
+
+  try {
+    const provider = new BrowserProvider(window.ethereum);
+    const accounts = await provider.send('eth_requestAccounts', []);
+    return accounts[0] || null;
+  } catch (error) {
+    console.error('Failed to connect wallet:', error);
+    return null;
+  }
+}
+
+// Get current connected wallet address
+export async function getWalletAddress(): Promise<string | null> {
+  if (typeof window === 'undefined' || !window.ethereum) {
+    return null;
+  }
+
+  try {
+    const provider = new BrowserProvider(window.ethereum);
+    const accounts = await provider.send('eth_accounts', []);
+    return accounts[0] || null;
+  } catch (error) {
+    console.error('Failed to get wallet address:', error);
+    return null;
+  }
+}
+
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}

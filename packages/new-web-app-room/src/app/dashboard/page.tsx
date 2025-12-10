@@ -1,14 +1,15 @@
 'use client';
 
 import { Header } from '@/components/Header';
-import { useAccount } from 'wagmi';
+import { useStore } from '@/lib/store';
 import { Building2, Wrench, Wallet, FileText, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function DashboardPage() {
-  const { isConnected } = useAccount();
+  const { walletAddress } = useStore();
+  const isConnected = !!walletAddress;
   const router = useRouter();
 
   useEffect(() => {

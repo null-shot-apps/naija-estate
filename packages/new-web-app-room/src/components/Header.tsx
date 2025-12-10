@@ -1,14 +1,41 @@
 'use client';
 
-import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import { useEffect } from 'react';
 import { Home, Building2, Wrench, User, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { truncateAddress } from '@/lib/utils';
+import { useStore } from '@/lib/store';
+import { connectWallet, getWalletAddress } from '@/lib/web3-config';
 
 export function Header() {
-  const { address, isConnected } = useAccount();
-  const { connect, connectors } = useConnect();
-  const { disconnect } = useDisconnect();
+  const { walletAddress, setWalletAddress } = useStore();
+
+  useEffect(() => {
+    // Check if wallet is already connected
+    getWalletAddress().then((address) => {
+      if (address) {
+        setWalletAddress(address);
+      }
+    });
+
+    // Listen for account changes
+    if (typeof window !== 'undefined' && window.ethereum) {
+      window.ethereum.on('accountsChanged', (accounts: string[]) => {
+        setWalletAddress(accounts[0] || null);
+      });
+    }
+  }, [setWalletAddress]);
+
+  const handleConnect = async () => {
+    const address = await connectWallet();
+    if (address) {
+      setWalletAddress(address);
+    }
+  };
+
+  const handleDisconnect = () => {
+    setWalletAddress(null);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
@@ -35,7 +62,7 @@ export function Header() {
             <Wrench className="h-4 w-4" />
             <span>Artisans</span>
           </Link>
-          {isConnected && (
+          {walletAddress && (
             <Link
               href="/dashboard"
               className="flex items-center space-x-1 text-sm font-medium text-gray-700 hover:text-green-600 transition-colors"
@@ -47,16 +74,16 @@ export function Header() {
         </nav>
 
         <div className="flex items-center space-x-4">
-          {isConnected ? (
+          {walletAddress ? (
             <>
               <div className="hidden sm:flex items-center space-x-2 px-3 py-2 bg-green-50 rounded-lg">
                 <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse" />
                 <span className="text-sm font-medium text-gray-700">
-                  {truncateAddress(address || '')}
+                  {truncateAddress(walletAddress)}
                 </span>
               </div>
               <button
-                onClick={() => disconnect()}
+                onClick={handleDisconnect}
                 className="flex items-center space-x-2 px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors"
               >
                 <LogOut className="h-4 w-4" />
@@ -65,7 +92,7 @@ export function Header() {
             </>
           ) : (
             <button
-              onClick={() => connect({ connector: connectors[0] })}
+              onClick={handleConnect}
               className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
             >
               Connect Wallet
@@ -76,4 +103,3 @@ export function Header() {
     </header>
   );
 }
-
