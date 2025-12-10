@@ -1,66 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) and configured for Cloudflare Pages deployment.
+# HomeChain Naija - Crypto Real Estate Platform
 
-## Getting Started
+A full-stack Web3 application for buying, renting, and managing properties in Nigeria using cryptocurrency.
 
-First, run the development server:
+## 🚀 Features
+
+### Core Features
+- **Crypto Wallet Integration**: Connect with MetaMask or WalletConnect
+- **Property Marketplace**: Browse and search properties for rent or sale
+- **Multi-Crypto Support**: Pay with USDC, USDT, ETH, BTC, or NGNX
+- **Escrow Smart Contracts**: Secure payments held until transaction confirmation
+- **NFT Property Certificates**: Blockchain-verified ownership certificates
+- **Artisan Marketplace**: Hire verified plumbers, electricians, painters, and carpenters
+- **Escrow-Based Payments**: Secure payments for artisan services
+- **Admin Dashboard**: Verify agents, approve listings, and resolve disputes
+
+### User Roles
+- **Regular Users**: Browse and purchase/rent properties, hire artisans
+- **Verified Agents**: List and manage properties
+- **Property Developers**: List multiple properties
+- **Artisans**: Offer services and receive crypto payments
+- **Admins**: Manage platform operations and verifications
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS 4
+- **Web3**: Wagmi, Viem, Ethers.js
+- **State Management**: Zustand
+- **Blockchain**: Ethereum Mainnet
+- **Icons**: Lucide React
+- **Deployment**: Cloudflare Pages (via OpenNext)
+
+## 📦 Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Install dependencies
+pnpm install
+
+# Run development server
 pnpm dev
-# or
-bun dev
+
+# Build for production
+pnpm build
+
+# Deploy to Cloudflare
+pnpm deploy
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌐 Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env.local` file:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Webview & CORS Configuration
-
-This template is configured with **universal CORS and iframe embedding** for maximum compatibility:
-
-### 🌐 Simple Universal Access
-- **All Routes & Assets**: Wildcard CORS allowing any origin, method, and headers
-- **No File Type Restrictions**: Works with any file format your project uses
-- **Iframe Ready**: `Content-Security-Policy: frame-ancestors *` allows embedding in any iframe
-- **Webview Ready**: Configured for embedding in any container or webview
-- **Development Friendly**: Works across any port, domain, or subdomain
-
-### 🚀 Works Everywhere
-- Any localhost port (`localhost:3000`, `localhost:8080`, etc.)
-- Any subdomain pattern (`*.localhost`, `*.nullshot.dev`, etc.)
-- Webview containers (Electron, VSCode, browser iframes)
-- Cross-origin development scenarios
-- CDN and edge deployments
-
-### Environment Variables
-
-Create a `.env.local` file for local development:
-
-```bash
-# Next.js Environment (for Cloudflare deployment)
-NEXTJS_ENV=development
-
-# Optional: Override CORS settings if needed
-# CORS_ALLOWED_ORIGINS=http://localhost:3000,https://yourdomain.com
+```env
+NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=your_project_id_here
 ```
 
-## Learn More
+Get your WalletConnect Project ID from: https://cloud.walletconnect.com/
 
-To learn more about Next.js, take a look at the following resources:
+## 📱 Pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `/` - Homepage with platform overview
+- `/properties` - Browse all properties
+- `/properties/[id]` - Property details and payment
+- `/artisans` - Browse artisan marketplace
+- `/dashboard` - User dashboard (requires wallet connection)
+- `/admin` - Admin panel for platform management
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 💰 Supported Cryptocurrencies
 
-## Deploy on Vercel
+- **USDC** (USD Coin)
+- **USDT** (Tether)
+- **ETH** (Ethereum)
+- **BTC** (Bitcoin)
+- **NGNX** (Nigerian Naira Stablecoin)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔐 Security Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Smart contract escrow for all transactions
+- Verified agents and artisans only
+- Admin approval for property listings
+- Dispute resolution system
+- On-chain ownership verification
+
+## 🎨 Key Components
+
+### Property Features
+- High-quality image galleries
+- Detailed property information
+- Location mapping
+- Agent contact details
+- Real-time crypto price conversion
+- Secure payment modal
+
+### Artisan Features
+- Category-based filtering (plumber, electrician, painter, carpenter)
+- Skill and experience display
+- Hourly rate in multiple cryptocurrencies
+- Availability status
+- Rating and review system
+- Job escrow system
+
+### Admin Features
+- Agent verification workflow
+- Property approval system
+- Artisan verification
+- Dispute management
+- Platform statistics
+
+## 🚧 Future Enhancements
+
+- [ ] Implement actual smart contracts for escrow
+- [ ] Add real-time chat between users and agents
+- [ ] Integrate with property APIs for real listings
+- [ ] Add KYC verification for agents
+- [ ] Implement NFT minting for property certificates
+- [ ] Add multi-language support (English, Yoruba, Igbo, Hausa)
+- [ ] Mobile app development
+- [ ] Integration with Nigerian payment gateways
+- [ ] Property inspection scheduling
+- [ ] Virtual property tours
+- [ ] Mortgage calculator with crypto
+- [ ] Rental payment automation
+
+## 📄 License
+
+MIT License - feel free to use this project for your own purposes.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📞 Support
+
+For support, email support@homechain.ng or join our Telegram community.
+
+---
+
+Built with ❤️ for the Nigerian real estate market
+
